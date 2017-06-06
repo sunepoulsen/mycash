@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.control.TreeTableColumn?>
+
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
+    <TabPane fx:id="panes" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+        <tabs>
+            <Tab text="Accounts">
+                <content>
+                    <TreeTableView>
+                        <columns>
+                            <TreeTableColumn text="Id" />
+                            <TreeTableColumn text="Name" />
+                            <TreeTableColumn text="Type" />
+                            <TreeTableColumn text="Description" />
+                            <TreeTableColumn text="Balance" />
+                        </columns>
+                    </TreeTableView>
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
+</fx:root>

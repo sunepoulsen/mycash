@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import dk.sunepoulsen.mycash.ui.topcomponents.contentpanes.ContentPanes?>
+<?import dk.sunepoulsen.mycash.ui.topcomponents.navigator.Navigator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import org.controlsfx.control.StatusBar?>
-<?import javafx.scene.control.TreeView?>
-<?import javafx.scene.control.TreeTableView?>
+<?import dk.sunepoulsen.mycash.ui.topcomponents.toppanel.TopPanel?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="dk.sunepoulsen.mycash.ui.mainwindow.MainWindow">
+    <top>
+        <TopPanel fx:id="topPanel" />
+    </top>
+
     <center>
         <SplitPane fx:id="panes">
             <items>
-                <TreeView fx:id="navigator"/>
-                <TreeTableView/>
+                <Navigator fx:id="navigator" />
+                <ContentPanes fx:id="contentPanes"/>
             </items>
         </SplitPane>
     </center>
