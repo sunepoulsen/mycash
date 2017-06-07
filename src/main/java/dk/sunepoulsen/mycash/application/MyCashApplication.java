@@ -1,5 +1,6 @@
 package dk.sunepoulsen.mycash.application;
 
+import dk.sunepoulsen.mycash.registry.Registry;
 import dk.sunepoulsen.mycash.ui.mainwindow.MainWindow;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -9,29 +10,53 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
- * Created by sunepoulsen on 08/05/2017.
+ * Application class of MyCash
  */
 public class MyCashApplication extends Application {
+    private Registry registry = Registry.getDefault();
+
+    /**
+     * Starts the JavaFX application.
+     * <p>
+     *     This method is called automatically by JavaFX.
+     * </p>
+     * <p>
+     *     It will setup the application and main window:
+     *     <ul>
+     *         <li>Initializing the global registry.</li>
+     *         <li>Initialize the main window from fxml</li>
+     *         <li>Maximize the main window to the primary screen</li>
+     *     </ul>
+     * </p>
+     */
     @Override
     public void start( final Stage primaryStage ) throws Exception {
+        registry.initialize( primaryStage );
+
         Parent root = FXMLLoader.load( MainWindow.class.getResource( "mainwindow.fxml" ) );
         Scene scene = new Scene( root );
 
         primaryStage.setTitle( "MyCash" );
         primaryStage.setScene( scene );
 
-        // Maximize the window
-        final Screen screen = Screen.getPrimary();
-        primaryStage.setX( screen.getVisualBounds().getMinX() );
-        primaryStage.setY( screen.getVisualBounds().getMinY() );
-        primaryStage.setWidth( screen.getVisualBounds().getWidth() );
-        primaryStage.setHeight( screen.getVisualBounds().getHeight() );
-
+        maximizeStage( primaryStage );
         primaryStage.show();
     }
 
+    /**
+     * Called when the application is about to stop executing.
+     * <p>
+     *     Extra steps:
+     *     <ul>
+     *         <li>Shutdown of the global registry</li>
+     *     </ul>
+     * </p>
+     *
+     * @throws Exception Not used by this method.
+     */
     @Override
     public void stop() throws Exception {
+        registry.shutdown();
         super.stop();
     }
 
@@ -45,5 +70,19 @@ public class MyCashApplication extends Application {
      */
     public static void main( String[] args ) {
         launch( args );
+    }
+
+    /**
+     * Maximizes a stage to the size of the primary screen.
+     *
+     * @param stage The stage to maximize.
+     */
+    private void maximizeStage( final Stage stage ) {
+        final Screen screen = Screen.getPrimary();
+
+        stage.setX( screen.getVisualBounds().getMinX() );
+        stage.setY( screen.getVisualBounds().getMinY() );
+        stage.setWidth( screen.getVisualBounds().getWidth() );
+        stage.setHeight( screen.getVisualBounds().getHeight() );
     }
 }
