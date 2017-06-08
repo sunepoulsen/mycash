@@ -6,11 +6,16 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import org.controlsfx.control.StatusBar?>
 <?import dk.sunepoulsen.mycash.ui.topcomponents.toppanel.TopPanel?>
+<?import dk.sunepoulsen.mycash.ui.mainwindow.ActionPanel?>
+<?import javafx.scene.layout.VBox?>
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="dk.sunepoulsen.mycash.ui.mainwindow.MainWindow">
     <top>
-        <TopPanel fx:id="topPanel" />
+        <VBox>
+            <ActionPanel fx:id="actionPanel" />
+            <TopPanel fx:id="topPanel" />
+        </VBox>
     </top>
 
     <center>

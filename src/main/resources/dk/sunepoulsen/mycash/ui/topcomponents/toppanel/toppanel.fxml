@@ -8,6 +8,6 @@
         <URL value="@toppanel.css"/>
     </stylesheets>
 
-    <Label text="MyCash" styleClass="top-label" />
+    <Label text="%application.name" styleClass="top-label" />
 
 </fx:root>

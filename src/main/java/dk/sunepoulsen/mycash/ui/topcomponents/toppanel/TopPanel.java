@@ -1,5 +1,6 @@
 package dk.sunepoulsen.mycash.ui.topcomponents.toppanel;
 
+import dk.sunepoulsen.mycash.registry.Registry;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.TreeView;
@@ -14,9 +15,12 @@ import java.io.IOException;
 @XSlf4j
 public class TopPanel extends AnchorPane {
     public TopPanel() {
+        Registry registry = Registry.getDefault();
+
         FXMLLoader fxmlLoader = new FXMLLoader( getClass().getResource( "toppanel.fxml" ) );
         fxmlLoader.setRoot( this );
         fxmlLoader.setController( this );
+        fxmlLoader.setResources( registry.getBundle( getClass() ) );
 
         try {
             fxmlLoader.load();

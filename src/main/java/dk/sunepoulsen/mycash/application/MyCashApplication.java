@@ -8,10 +8,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import lombok.extern.slf4j.XSlf4j;
 
 /**
  * Application class of MyCash
  */
+@XSlf4j
 public class MyCashApplication extends Application {
     private Registry registry = Registry.getDefault();
 
@@ -32,6 +34,7 @@ public class MyCashApplication extends Application {
     @Override
     public void start( final Stage primaryStage ) throws Exception {
         registry.initialize( primaryStage );
+        log.info( "Using locale: {}", registry.getLocale() );
 
         Parent root = FXMLLoader.load( MainWindow.class.getResource( "mainwindow.fxml" ) );
         Scene scene = new Scene( root );
