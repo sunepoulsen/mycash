@@ -61,9 +61,13 @@ public class ProjectDatabase {
     }
 
     public void disconnect() {
-        if( this.emf.isOpen() ) {
+        if( isOpen() ) {
             this.emf.close();
         }
+    }
+
+    public boolean isOpen() {
+        return this.emf.isOpen();
     }
 
     public void migrate() throws IOException, SQLException, LiquibaseException {
@@ -201,4 +205,5 @@ public class ProjectDatabase {
 
     public void deleteAllData() {
     }
+
 }

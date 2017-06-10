@@ -10,7 +10,9 @@
         <menus>
             <Menu text="%mainmenu.file">
                 <items>
-                    <MenuItem text="%mainmenu.file.new-project" onAction="#newProject" />
+                    <MenuItem text="%mainmenu.file.new-project" accelerator="Shortcut+N" onAction="#newProject" />
+                    <MenuItem text="%mainmenu.file.open-project" accelerator="Shortcut+O" onAction="#openProject" />
+                    <MenuItem fx:id="closeProjectMenuItem" text="%mainmenu.file.close-project" onAction="#closeProject" />
                 </items>
             </Menu>
         </menus>
