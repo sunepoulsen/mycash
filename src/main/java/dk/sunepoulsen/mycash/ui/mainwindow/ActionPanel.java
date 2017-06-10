@@ -1,13 +1,13 @@
 package dk.sunepoulsen.mycash.ui.mainwindow;
 
 import dk.sunepoulsen.mycash.registry.Registry;
+import dk.sunepoulsen.mycash.ui.tasks.CloseAccountingProjectTask;
 import dk.sunepoulsen.mycash.ui.tasks.CreateOrOpenAccountingProjectTask;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
@@ -113,8 +113,8 @@ public class ActionPanel extends AnchorPane implements Initializable {
      */
     @FXML
     private void closeProject( final ActionEvent event ) {
-        Alert alert = new Alert( Alert.AlertType.INFORMATION, bundle.getString( "action.not.implemented" ) );
-        alert.setHeaderText( bundle.getString( "action.file.close-project" ) );
-        alert.show();
+        if( onTaskCreated != null ) {
+            onTaskCreated.accept( new CloseAccountingProjectTask() );
+        }
     }
 }

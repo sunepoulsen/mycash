@@ -2,6 +2,7 @@ package dk.sunepoulsen.mycash.projects;
 
 import dk.sunepoulsen.mycash.db.storage.ProjectDatabase;
 import liquibase.exception.LiquibaseException;
+import lombok.Getter;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +27,7 @@ import java.sql.SQLException;
  *
  */
 public class AccountingProject {
+    @Getter
     private File directory;
     private ProjectDatabase database;
 
