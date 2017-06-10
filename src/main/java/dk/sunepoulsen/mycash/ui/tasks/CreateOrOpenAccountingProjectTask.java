@@ -11,13 +11,13 @@ import java.io.File;
  * Created by sunepoulsen on 18/05/2017.
  */
 @XSlf4j
-public class NewAccountingProjectTask extends Task<Void> {
+public class CreateOrOpenAccountingProjectTask extends Task<Void> {
     private File directory;
-    private AccountingProject createdProject;
+    private AccountingProject accountingProject;
 
-    public NewAccountingProjectTask( File directory ) {
+    public CreateOrOpenAccountingProjectTask( File directory ) {
         this.directory = directory;
-        this.createdProject = null;
+        this.accountingProject = null;
     }
 
     @Override
@@ -25,15 +25,15 @@ public class NewAccountingProjectTask extends Task<Void> {
         try {
             AccountingProject project = new AccountingProject( this.directory );
             project.connect();
-            log.info( "Created new accounting project in directory: {}", directory.getAbsolutePath() );
+            log.info( "Creating/opening accounting project in directory: {}", directory.getAbsolutePath() );
 
             // Store the project on the instance so we can register it in the registry when the task succeed.
-            this.createdProject = project;
+            this.accountingProject = project;
 
             return null;
         }
         catch( Exception ex ) {
-            log.warn( "An error occurred doing creating new accounting project" );
+            log.warn( "An error occurred while creating/opening accounting project" );
             log.catching( ex );
 
             return null;
@@ -42,7 +42,7 @@ public class NewAccountingProjectTask extends Task<Void> {
 
     @Override
     protected void succeeded() {
-        Registry.getDefault().getCurrentProjectProperty().set( createdProject );
+        Registry.getDefault().getCurrentProjectProperty().set( accountingProject );
         super.succeeded();
     }
 }

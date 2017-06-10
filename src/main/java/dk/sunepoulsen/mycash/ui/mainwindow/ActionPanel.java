@@ -1,9 +1,8 @@
 package dk.sunepoulsen.mycash.ui.mainwindow;
 
 import dk.sunepoulsen.mycash.registry.Registry;
-import dk.sunepoulsen.mycash.ui.tasks.NewAccountingProjectTask;
+import dk.sunepoulsen.mycash.ui.tasks.CreateOrOpenAccountingProjectTask;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +12,6 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import lombok.Setter;
 import lombok.extern.slf4j.XSlf4j;
@@ -21,7 +19,6 @@ import lombok.extern.slf4j.XSlf4j;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -87,7 +84,7 @@ public class ActionPanel extends AnchorPane implements Initializable {
         File directory = chooser.showDialog( stage );
 
         if( directory != null && onTaskCreated != null ) {
-            Task task = new NewAccountingProjectTask( directory );
+            Task task = new CreateOrOpenAccountingProjectTask( directory );
             onTaskCreated.accept( task );
         }
     }
@@ -103,10 +100,9 @@ public class ActionPanel extends AnchorPane implements Initializable {
         chooser.setTitle( "Select a directory that contains a Accounting Project" );
         File directory = chooser.showDialog( stage );
 
-        if( directory != null ) {
-            Alert alert = new Alert( Alert.AlertType.INFORMATION, "This would open the accounting project in directory '" + directory.getAbsolutePath() + "' once it is implemented." );
-            alert.setHeaderText( bundle.getString( "action.file.open-project" ) );
-            alert.show();
+        if( directory != null && onTaskCreated != null ) {
+            Task task = new CreateOrOpenAccountingProjectTask( directory );
+            onTaskCreated.accept( task );
         }
     }
 
