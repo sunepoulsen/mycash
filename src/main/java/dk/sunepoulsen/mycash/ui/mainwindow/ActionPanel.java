@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
@@ -28,10 +29,13 @@ import java.util.function.Consumer;
 @XSlf4j
 public class ActionPanel extends AnchorPane implements Initializable {
     @FXML
-    private MenuBar menuBar;
+    private MenuBar menuBar = null;
 
     @FXML
-    private MenuItem closeProjectMenuItem;
+    private MenuItem closeFileMenuItem = null;
+
+    @FXML
+    private MenuItem newAccountingMenuItem = null;
 
     Registry registry;
     private ResourceBundle bundle;
@@ -65,7 +69,8 @@ public class ActionPanel extends AnchorPane implements Initializable {
         bundle = resources;
         menuBar.setUseSystemMenuBar( true );
 
-        closeProjectMenuItem.disableProperty().bind( registry.getNoCurrentProjectProperty() );
+        closeFileMenuItem.disableProperty().bind( registry.getNoCurrentProjectProperty() );
+        newAccountingMenuItem.disableProperty().bind( registry.getNoCurrentProjectProperty() );
     }
 
     //-------------------------------------------------------------------------
@@ -73,12 +78,12 @@ public class ActionPanel extends AnchorPane implements Initializable {
     //-------------------------------------------------------------------------
 
     /**
-     * Handle action related to "File|New project" menu item.
+     * Handle action related to "File|New" menu item.
      *
-     * @param event Event on "File|New project" menu item.
+     * @param event Event on "File|New" menu item.
      */
     @FXML
-    private void newProject( final ActionEvent event ) {
+    private void newFile( final ActionEvent event ) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle( "Select an empty directory for a new Accounting Project" );
         File directory = chooser.showDialog( stage );
@@ -90,12 +95,12 @@ public class ActionPanel extends AnchorPane implements Initializable {
     }
 
     /**
-     * Handle action related to "File|Open project" menu item.
+     * Handle action related to "File|Open" menu item.
      *
-     * @param event Event on "File|Open project" menu item.
+     * @param event Event on "File|Open" menu item.
      */
     @FXML
-    private void openProject( final ActionEvent event ) {
+    private void openFile( final ActionEvent event ) {
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setTitle( "Select a directory that contains a Accounting Project" );
         File directory = chooser.showDialog( stage );
@@ -107,14 +112,26 @@ public class ActionPanel extends AnchorPane implements Initializable {
     }
 
     /**
-     * Handle action related to "File|Close project" menu item.
+     * Handle action related to "File|Close" menu item.
      *
-     * @param event Event on "File|Close project" menu item.
+     * @param event Event on "File|Close" menu item.
      */
     @FXML
-    private void closeProject( final ActionEvent event ) {
+    private void closeFile( final ActionEvent event ) {
         if( onTaskCreated != null ) {
             onTaskCreated.accept( new CloseAccountingProjectTask() );
         }
+    }
+
+    /**
+     * Handle action related to "File|New" menu item.
+     *
+     * @param event Event on "File|New" menu item.
+     */
+    @FXML
+    private void newAccounting( final ActionEvent event ) {
+        Alert alert = new Alert( Alert.AlertType.INFORMATION, bundle.getString( "action.not.implemented" ) );
+        alert.setHeaderText( bundle.getString( "mainmenu.file" ) + "|" + bundle.getString( "mainmenu.file.new-accounting" ) );
+        alert.show();
     }
 }

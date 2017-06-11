@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuItem?>
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
     <MenuBar fx:id="menuBar" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
         <menus>
             <Menu text="%mainmenu.file">
                 <items>
-                    <MenuItem text="%mainmenu.file.new-project" accelerator="Shortcut+N" onAction="#newProject" />
-                    <MenuItem text="%mainmenu.file.open-project" accelerator="Shortcut+O" onAction="#openProject" />
-                    <MenuItem fx:id="closeProjectMenuItem" text="%mainmenu.file.close-project" onAction="#closeProject" />
+                    <MenuItem text="%mainmenu.file.new" accelerator="Shortcut+N" onAction="#newFile" />
+                    <MenuItem text="%mainmenu.file.open" accelerator="Shortcut+O" onAction="#openFile" />
+                    <MenuItem fx:id="closeFileMenuItem" text="%mainmenu.file.close" onAction="#closeFile" />
+                    <SeparatorMenuItem />
+                    <MenuItem fx:id="newAccountingMenuItem" text="%mainmenu.file.new-accounting" onAction="#newAccounting" />
                 </items>
             </Menu>
         </menus>
