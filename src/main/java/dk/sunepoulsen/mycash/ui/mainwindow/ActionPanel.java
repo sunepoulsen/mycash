@@ -6,6 +6,7 @@ import dk.sunepoulsen.mycash.ui.model.Accounting;
 import dk.sunepoulsen.mycash.ui.tasks.CloseAccountingProjectTask;
 import dk.sunepoulsen.mycash.ui.tasks.CreateAccountingTask;
 import dk.sunepoulsen.mycash.ui.tasks.CreateOrOpenAccountingProjectTask;
+import dk.sunepoulsen.mycash.ui.topcomponents.navigator.Navigator;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -41,6 +42,9 @@ public class ActionPanel extends AnchorPane implements Initializable {
     @FXML
     private MenuItem newAccountingMenuItem = null;
 
+    @Setter
+    private Navigator navigator;
+
     Registry registry;
     private ResourceBundle bundle;
 
@@ -50,6 +54,7 @@ public class ActionPanel extends AnchorPane implements Initializable {
     private Consumer<Task> onTaskCreated;
 
     public ActionPanel() {
+        this.navigator = null;
         this.registry = Registry.getDefault();
         this.stage = this.registry.getUiRegistry().getStage();
 
@@ -144,6 +149,7 @@ public class ActionPanel extends AnchorPane implements Initializable {
                 alert.setHeaderText( bundle.getString( "mainmenu.file" ) + "|" + bundle.getString( "mainmenu.file.new-accounting" ) );
                 alert.show();
             } );
+            task.setOnSucceeded( e -> navigator.reload() );
 
             onTaskCreated.accept( task );
         }

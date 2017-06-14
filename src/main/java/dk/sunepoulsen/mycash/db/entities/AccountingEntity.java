@@ -11,6 +11,9 @@ import java.time.LocalDate;
 @Data
 @Entity
 @Table( name = "accountings" )
+@NamedQueries( {
+        @NamedQuery( name = "findAll", query = "SELECT a FROM AccountingEntity a" )
+})
 public class AccountingEntity {
     /**
      * Primary key.

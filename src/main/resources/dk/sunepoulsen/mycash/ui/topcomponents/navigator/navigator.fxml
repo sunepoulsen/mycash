@@ -2,18 +2,6 @@
 
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.TreeItem?>
 <fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
-    <TreeView fx:id="treeView" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0" showRoot="false">
-        <TreeItem value="Root">
-            <children>
-                <TreeItem value="Finances">
-                    <children>
-                        <TreeItem value="Accounts"/>
-                        <TreeItem value="Book keeping"/>
-                    </children>
-                </TreeItem>
-            </children>
-        </TreeItem>
-    </TreeView>
+    <TreeView fx:id="treeView" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0" showRoot="false" />
 </fx:root>
