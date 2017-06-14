@@ -12,7 +12,12 @@ public class ControlUtils {
             return "";
         }
 
-        return field.getText();
+        String s = field.getText();
+        if( s != null ) {
+            return s;
+        }
+
+        return "";
     }
 
     public static String getText( DatePicker control ) {

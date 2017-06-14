@@ -13,9 +13,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.util.converter.LocalDateStringConverter;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
@@ -80,9 +82,13 @@ public class AccountingDialog extends GridPane implements Initializable {
         nameField.setText( model.getName() );
         nameField.textProperty().addListener( ( observable, oldValue, newValue ) -> disableButtons() );
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( registry.getSettings().getShortDateFormat() );
+
+        startDate.setConverter( new LocalDateStringConverter( formatter, null ) );
         startDate.setValue( model.getStartDate() );
         startDate.editorProperty().getValue().textProperty().addListener( ( observable, oldValue, newValue ) -> disableButtons() );
 
+        endDate.setConverter( new LocalDateStringConverter( formatter, null ) );
         endDate.setValue( model.getEndDate() );
         endDate.editorProperty().getValue().textProperty().addListener( ( observable, oldValue, newValue ) -> disableButtons() );
     }

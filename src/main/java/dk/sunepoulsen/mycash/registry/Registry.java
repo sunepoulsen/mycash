@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.IOException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -25,7 +26,8 @@ public class Registry {
 
     public Registry() {
         this.uiRegistry = new UIRegistry();
-        this.locale = Locale.getDefault();
+        this.locale = null;
+        this.settings = new Settings();
 
         this.noBackendConnectionWrapper = new ReadOnlyBooleanWrapper( true );
         this.currentBackendConnectionProperty = new SimpleObjectProperty<>();
@@ -33,8 +35,10 @@ public class Registry {
         this.currentBackendConnectionProperty.addListener( this::updateNoBackendConnectionWrapper );
     }
 
-    public void initialize( final Stage primaryStage ) {
+    public void initialize( final Stage primaryStage ) throws IOException {
         this.uiRegistry.initialize( primaryStage );
+        this.locale = Locale.getDefault();
+        this.settings.loadSettings();
     }
 
     public void shutdown() {
@@ -102,6 +106,10 @@ public class Registry {
     @Getter
     @Setter
     private Locale locale;
+
+    @Getter
+    @Setter
+    private Settings settings;
 
     @Getter
     private UIRegistry uiRegistry;

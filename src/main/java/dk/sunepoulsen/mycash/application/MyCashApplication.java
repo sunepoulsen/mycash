@@ -10,6 +10,8 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.XSlf4j;
 
+import java.util.Locale;
+
 /**
  * Application class of MyCash
  */
@@ -33,6 +35,8 @@ public class MyCashApplication extends Application {
      */
     @Override
     public void start( final Stage primaryStage ) throws Exception {
+        Locale.setDefault( new Locale( "en", "DK" ) );
+
         registry.initialize( primaryStage );
         log.info( "Using locale: {}", registry.getLocale() );
 
