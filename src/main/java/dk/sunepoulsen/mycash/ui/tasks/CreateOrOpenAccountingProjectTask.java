@@ -1,6 +1,6 @@
 package dk.sunepoulsen.mycash.ui.tasks;
 
-import dk.sunepoulsen.mycash.projects.AccountingProject;
+import dk.sunepoulsen.mycash.backend.BackendConnection;
 import dk.sunepoulsen.mycash.registry.Registry;
 import javafx.concurrent.Task;
 import lombok.extern.slf4j.XSlf4j;
@@ -13,26 +13,26 @@ import java.io.File;
 @XSlf4j
 public class CreateOrOpenAccountingProjectTask extends Task<Void> {
     private File directory;
-    private AccountingProject accountingProject;
+    private BackendConnection connection;
 
     public CreateOrOpenAccountingProjectTask( File directory ) {
         this.directory = directory;
-        this.accountingProject = null;
+        this.connection = null;
     }
 
     @Override
     protected Void call() throws Exception {
         try {
-            AccountingProject project = new AccountingProject( this.directory );
+            BackendConnection project = new BackendConnection( this.directory );
             project.connect();
 
-            // Store the project on the instance so we can register it in the registry when the task succeed.
-            this.accountingProject = project;
+            // Store the connection on the instance so we can register it in the registry when the task succeed.
+            this.connection = project;
 
             return null;
         }
         catch( Exception ex ) {
-            log.warn( "An error occurred while creating/opening accounting project" );
+            log.warn( "An error occurred while creating/opening accounting connection" );
             log.catching( ex );
 
             return null;
@@ -41,7 +41,7 @@ public class CreateOrOpenAccountingProjectTask extends Task<Void> {
 
     @Override
     protected void succeeded() {
-        Registry.getDefault().getCurrentProjectProperty().set( accountingProject );
+        Registry.getDefault().getCurrentBackendConnectionProperty().set( connection );
         super.succeeded();
     }
 }

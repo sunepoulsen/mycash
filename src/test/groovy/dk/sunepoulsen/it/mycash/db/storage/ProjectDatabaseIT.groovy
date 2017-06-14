@@ -1,8 +1,8 @@
 package dk.sunepoulsen.it.mycash.db.storage
 
+import dk.sunepoulsen.mycash.backend.services.AccountingService
 import dk.sunepoulsen.mycash.db.entities.AccountingEntity
 import dk.sunepoulsen.mycash.db.storage.ProjectDatabase
-import dk.sunepoulsen.mycash.projects.services.AccountingService
 import dk.sunepoulsen.mycash.ui.model.Accounting
 import org.junit.After
 import org.junit.Before

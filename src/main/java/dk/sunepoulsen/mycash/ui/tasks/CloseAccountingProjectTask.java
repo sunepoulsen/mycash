@@ -1,6 +1,6 @@
 package dk.sunepoulsen.mycash.ui.tasks;
 
-import dk.sunepoulsen.mycash.projects.AccountingProject;
+import dk.sunepoulsen.mycash.backend.BackendConnection;
 import dk.sunepoulsen.mycash.registry.Registry;
 import javafx.concurrent.Task;
 import lombok.extern.slf4j.XSlf4j;
@@ -13,13 +13,13 @@ public class CloseAccountingProjectTask extends Task<Void> {
     @Override
     protected Void call() throws Exception {
         try {
-            AccountingProject project = Registry.getDefault().getCurrentProjectProperty().get();
-            project.disconnect();
+            BackendConnection connection = Registry.getDefault().getCurrentBackendConnectionProperty().get();
+            connection.disconnect();
 
             return null;
         }
         catch( Exception ex ) {
-            log.warn( "An error occurred while creating/opening accounting project" );
+            log.warn( "An error occurred while creating/opening accounting connection" );
             log.catching( ex );
 
             return null;
@@ -28,7 +28,7 @@ public class CloseAccountingProjectTask extends Task<Void> {
 
     @Override
     protected void succeeded() {
-        Registry.getDefault().getCurrentProjectProperty().set( null );
+        Registry.getDefault().getCurrentBackendConnectionProperty().set( null );
         super.succeeded();
     }
 }

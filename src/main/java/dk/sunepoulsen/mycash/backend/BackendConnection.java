@@ -1,7 +1,7 @@
-package dk.sunepoulsen.mycash.projects;
+package dk.sunepoulsen.mycash.backend;
 
+import dk.sunepoulsen.mycash.backend.services.ServicesFactory;
 import dk.sunepoulsen.mycash.db.storage.ProjectDatabase;
-import dk.sunepoulsen.mycash.projects.services.ServicesFactory;
 import liquibase.exception.LiquibaseException;
 import lombok.Getter;
 import lombok.extern.slf4j.XSlf4j;
@@ -17,7 +17,7 @@ import java.sql.SQLException;
  *
  * From a public point of view this class has the following responsibilities:
  * <ul>
- *     <li>Define properties that can identify a project on desk</li>
+ *     <li>Define properties that can identify a connection on desk</li>
  *     <li>
  *         Provide factory methods to create service classes that can do operations on an Accounting Project.
  *     </li>
@@ -29,30 +29,30 @@ import java.sql.SQLException;
  *
  */
 @XSlf4j
-public class AccountingProject {
+public class BackendConnection {
     @Getter
     private File directory;
     private ProjectDatabase database;
 
-    public AccountingProject( File directory ) {
+    public BackendConnection( File directory ) {
         this.directory = directory;
         this.database = new ProjectDatabase( String.format( "jdbc:h2:%s/data", directory.getAbsolutePath() ) );
     }
 
-    public void connect() throws AccountingProjectException {
+    public void connect() throws BackendConnectionException {
         try {
             this.database.migrate();
             this.database.connect();
-            log.info( "Creating/opening accounting project in directory: {}", directory.getAbsolutePath() );
+            log.info( "Creating/opening backend database connection in directory: {}", directory.getAbsolutePath() );
         }
         catch( IOException | SQLException | LiquibaseException ex ) {
-            throw new AccountingProjectException( "Unable to connect to account project in " + directory.getAbsolutePath(), ex );
+            throw new BackendConnectionException( "Unable to connect to backend database connection in " + directory.getAbsolutePath(), ex );
         }
     }
 
     public void disconnect() {
         this.database.disconnect();
-        log.info( "Closed accounting project in directory: {}", directory.getAbsolutePath() );
+        log.info( "Closed accounting connection in directory: {}", directory.getAbsolutePath() );
     }
 
     public boolean isOpen() {

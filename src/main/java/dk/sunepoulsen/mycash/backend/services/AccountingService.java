@@ -1,4 +1,4 @@
-package dk.sunepoulsen.mycash.projects.services;
+package dk.sunepoulsen.mycash.backend.services;
 
 import dk.sunepoulsen.mycash.db.entities.AccountingEntity;
 import dk.sunepoulsen.mycash.db.storage.ProjectDatabase;

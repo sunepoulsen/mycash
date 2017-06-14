@@ -73,8 +73,8 @@ public class ActionPanel extends AnchorPane implements Initializable {
         bundle = resources;
         menuBar.setUseSystemMenuBar( true );
 
-        closeFileMenuItem.disableProperty().bind( registry.getNoCurrentProjectProperty() );
-        newAccountingMenuItem.disableProperty().bind( registry.getNoCurrentProjectProperty() );
+        closeFileMenuItem.disableProperty().bind( registry.getNoBackendConnectionProperty() );
+        newAccountingMenuItem.disableProperty().bind( registry.getNoBackendConnectionProperty() );
     }
 
     //-------------------------------------------------------------------------
@@ -138,7 +138,7 @@ public class ActionPanel extends AnchorPane implements Initializable {
         Optional<Accounting> model = dialog.showAndWait();
 
         if( model.isPresent() && onTaskCreated != null ) {
-            CreateAccountingTask task = new CreateAccountingTask( registry.getCurrentProjectProperty().get(), model.get() );
+            CreateAccountingTask task = new CreateAccountingTask( registry.getCurrentBackendConnectionProperty().get(), model.get() );
             task.setOnFailed( e -> {
                 Alert alert = new Alert( Alert.AlertType.INFORMATION, task.getException().getMessage() );
                 alert.setHeaderText( bundle.getString( "mainmenu.file" ) + "|" + bundle.getString( "mainmenu.file.new-accounting" ) );

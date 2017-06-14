@@ -3,12 +3,10 @@ package dk.sunepoulsen.mycash.registry;
 
 //-----------------------------------------------------------------------------
 
-import dk.sunepoulsen.mycash.projects.AccountingProject;
-import javafx.beans.InvalidationListener;
+import dk.sunepoulsen.mycash.backend.BackendConnection;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -29,10 +27,10 @@ public class Registry {
         this.uiRegistry = new UIRegistry();
         this.locale = Locale.getDefault();
 
-        this.noCurrentProjectWrapper = new ReadOnlyBooleanWrapper( true );
-        this.currentProjectProperty = new SimpleObjectProperty<>();
-        this.currentProjectProperty.addListener( this::disconnectCurrentAccountingProject );
-        this.currentProjectProperty.addListener( this::updateNoCurrentProjectWrapper );
+        this.noBackendConnectionWrapper = new ReadOnlyBooleanWrapper( true );
+        this.currentBackendConnectionProperty = new SimpleObjectProperty<>();
+        this.currentBackendConnectionProperty.addListener( this::disconnectCurrentBackendConnection );
+        this.currentBackendConnectionProperty.addListener( this::updateNoBackendConnectionWrapper );
     }
 
     public void initialize( final Stage primaryStage ) {
@@ -41,15 +39,15 @@ public class Registry {
 
     public void shutdown() {
         this.uiRegistry.shutdown();
-        disconnectCurrentAccountingProject( currentProjectProperty, currentProjectProperty.get(), currentProjectProperty.get() );
+        disconnectCurrentBackendConnection( currentBackendConnectionProperty, currentBackendConnectionProperty.get(), currentBackendConnectionProperty.get() );
     }
 
     //-------------------------------------------------------------------------
     //              Properties
     //-------------------------------------------------------------------------
 
-    public ReadOnlyBooleanProperty getNoCurrentProjectProperty() {
-        return this.noCurrentProjectWrapper.getReadOnlyProperty();
+    public ReadOnlyBooleanProperty getNoBackendConnectionProperty() {
+        return this.noBackendConnectionWrapper.getReadOnlyProperty();
     }
 
     //-------------------------------------------------------------------------
@@ -77,14 +75,14 @@ public class Registry {
     //              Accounting Project
     //-------------------------------------------------------------------------
 
-    private void disconnectCurrentAccountingProject( ObservableValue<? extends AccountingProject> observable, AccountingProject oldValue, AccountingProject newValue ) {
+    private void disconnectCurrentBackendConnection( ObservableValue<? extends BackendConnection> observable, BackendConnection oldValue, BackendConnection newValue ) {
         if( oldValue != null && oldValue.isOpen() ) {
             oldValue.disconnect();
         }
     }
 
-    private void updateNoCurrentProjectWrapper( ObservableValue<? extends AccountingProject> observable, AccountingProject oldValue, AccountingProject newValue ) {
-        noCurrentProjectWrapper.set( newValue == null );
+    private void updateNoBackendConnectionWrapper( ObservableValue<? extends BackendConnection> observable, BackendConnection oldValue, BackendConnection newValue ) {
+        noBackendConnectionWrapper.set( newValue == null );
     }
 
     //-------------------------------------------------------------------------
@@ -94,12 +92,12 @@ public class Registry {
     private static Registry global;
 
     /**
-     * This project holds the currently opened Accounting Project.
+     * This connection holds the currently opened Accounting Project.
      */
     @Getter
-    private SimpleObjectProperty<AccountingProject> currentProjectProperty;
+    private SimpleObjectProperty<BackendConnection> currentBackendConnectionProperty;
 
-    private ReadOnlyBooleanWrapper noCurrentProjectWrapper;
+    private ReadOnlyBooleanWrapper noBackendConnectionWrapper;
 
     @Getter
     @Setter
