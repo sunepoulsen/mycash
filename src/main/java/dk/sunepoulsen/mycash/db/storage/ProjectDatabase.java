@@ -16,7 +16,10 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -143,22 +146,6 @@ public class ProjectDatabase {
         }
     }
 
-    public <T> int executeUpdate( Function<EntityManager, TypedQuery<T>> function ) {
-        EntityManager em = emf.createEntityManager();
-
-        try {
-            TypedQuery<T> query = function.apply( em );
-            return query.executeUpdate();
-        }
-        finally {
-            em.close();
-        }
-    }
-
-    public void persist( Object value ) {
-        transactional( em -> em.persist( value ) );
-    }
-
     public void untransactionalConsumer( Consumer<EntityManager> consumer ) {
         EntityManager em = emf.createEntityManager();
 
@@ -204,6 +191,9 @@ public class ProjectDatabase {
     }
 
     public void deleteAllData() {
+        transactional( em -> {
+            em.createQuery( "DELETE FROM AccountingEntity a" ).executeUpdate();
+        } );
     }
 
 }

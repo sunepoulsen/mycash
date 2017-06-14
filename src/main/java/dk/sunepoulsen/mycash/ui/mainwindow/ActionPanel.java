@@ -1,7 +1,10 @@
 package dk.sunepoulsen.mycash.ui.mainwindow;
 
 import dk.sunepoulsen.mycash.registry.Registry;
+import dk.sunepoulsen.mycash.ui.dialogs.AccountingDialog;
+import dk.sunepoulsen.mycash.ui.model.Accounting;
 import dk.sunepoulsen.mycash.ui.tasks.CloseAccountingProjectTask;
+import dk.sunepoulsen.mycash.ui.tasks.CreateAccountingTask;
 import dk.sunepoulsen.mycash.ui.tasks.CreateOrOpenAccountingProjectTask;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -20,6 +23,7 @@ import lombok.extern.slf4j.XSlf4j;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -130,8 +134,18 @@ public class ActionPanel extends AnchorPane implements Initializable {
      */
     @FXML
     private void newAccounting( final ActionEvent event ) {
-        Alert alert = new Alert( Alert.AlertType.INFORMATION, bundle.getString( "action.not.implemented" ) );
-        alert.setHeaderText( bundle.getString( "mainmenu.file" ) + "|" + bundle.getString( "mainmenu.file.new-accounting" ) );
-        alert.show();
+        AccountingDialog dialog = new AccountingDialog();
+        Optional<Accounting> model = dialog.showAndWait();
+
+        if( model.isPresent() && onTaskCreated != null ) {
+            CreateAccountingTask task = new CreateAccountingTask( registry.getCurrentProjectProperty().get(), model.get() );
+            task.setOnFailed( e -> {
+                Alert alert = new Alert( Alert.AlertType.INFORMATION, task.getException().getMessage() );
+                alert.setHeaderText( bundle.getString( "mainmenu.file" ) + "|" + bundle.getString( "mainmenu.file.new-accounting" ) );
+                alert.show();
+            } );
+
+            onTaskCreated.accept( task );
+        }
     }
 }

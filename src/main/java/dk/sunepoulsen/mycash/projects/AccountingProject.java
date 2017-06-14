@@ -1,8 +1,10 @@
 package dk.sunepoulsen.mycash.projects;
 
 import dk.sunepoulsen.mycash.db.storage.ProjectDatabase;
+import dk.sunepoulsen.mycash.projects.services.ServicesFactory;
 import liquibase.exception.LiquibaseException;
 import lombok.Getter;
+import lombok.extern.slf4j.XSlf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -26,6 +28,7 @@ import java.sql.SQLException;
  *
  *
  */
+@XSlf4j
 public class AccountingProject {
     @Getter
     private File directory;
@@ -40,6 +43,7 @@ public class AccountingProject {
         try {
             this.database.migrate();
             this.database.connect();
+            log.info( "Creating/opening accounting project in directory: {}", directory.getAbsolutePath() );
         }
         catch( IOException | SQLException | LiquibaseException ex ) {
             throw new AccountingProjectException( "Unable to connect to account project in " + directory.getAbsolutePath(), ex );
@@ -48,9 +52,14 @@ public class AccountingProject {
 
     public void disconnect() {
         this.database.disconnect();
+        log.info( "Closed accounting project in directory: {}", directory.getAbsolutePath() );
     }
 
     public boolean isOpen() {
         return database.isOpen();
+    }
+
+    public ServicesFactory servicesFactory() {
+        return new ServicesFactory( this.database );
     }
 }

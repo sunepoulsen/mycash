@@ -2,6 +2,7 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
              version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
     <persistence-unit name="mycash" transaction-type="RESOURCE_LOCAL">
+        <class>dk.sunepoulsen.mycash.db.entities.AccountingEntity</class>
         <class>dk.sunepoulsen.mycash.db.entities.CityCodeEntity</class>
 
         <properties>

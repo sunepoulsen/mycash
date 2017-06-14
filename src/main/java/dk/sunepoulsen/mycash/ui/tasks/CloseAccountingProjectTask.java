@@ -15,7 +15,6 @@ public class CloseAccountingProjectTask extends Task<Void> {
         try {
             AccountingProject project = Registry.getDefault().getCurrentProjectProperty().get();
             project.disconnect();
-            log.info( "Closed accounting project in directory: {}", project.getDirectory().getAbsolutePath() );
 
             return null;
         }
