@@ -52,6 +52,9 @@ public class MyCashApplication extends Application {
 
         primaryStage.setTitle( "MyCash" );
         primaryStage.setScene( scene );
+        scene.windowProperty().getValue().setOnShown( mainWindow::initializeSplitPaneDividerPosition );
+        scene.windowProperty().getValue().setOnCloseRequest( mainWindow::storeSplitPaneDividerPosition );
+
 
         maximizeStage( primaryStage );
         primaryStage.show();

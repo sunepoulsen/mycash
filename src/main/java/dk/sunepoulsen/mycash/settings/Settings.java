@@ -7,6 +7,7 @@ import dk.sunepoulsen.mycash.settings.model.UserStates;
 import dk.sunepoulsen.mycash.utils.os.OperatingSystem;
 import dk.sunepoulsen.mycash.utils.os.OperatingSystemFactory;
 import lombok.Data;
+import lombok.extern.slf4j.XSlf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.io.IOException;
  * Created by sunepoulsen on 14/06/2017.
  */
 @Data
+@XSlf4j
 public class Settings {
     private SettingsModel model;
     private UserStates userStates;
@@ -48,7 +50,8 @@ public class Settings {
         OperatingSystem os = OperatingSystemFactory.getInstance();
 
         File file = new File( os.applicationDataDirectory().getAbsolutePath() + "/user-states.json" );
-        if( file.getParentFile().mkdirs() ) {
+        if( file.getParentFile().exists() || file.getParentFile().mkdirs() ) {
+            log.debug( "Store user states to file: {}", file.getAbsolutePath() );
             mapper.writeValue( file, this.userStates );
         }
     }
