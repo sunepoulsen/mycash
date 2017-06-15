@@ -34,7 +34,7 @@ public class MainWindow implements Initializable {
         actionPanel.setOnTaskCreated( this::setupAndExecuteTask );
     }
 
-    private void setupAndExecuteTask( Task task ) {
+    public void setupAndExecuteTask( Task task ) {
         taskExecutorService.submit( task );
     }
 }

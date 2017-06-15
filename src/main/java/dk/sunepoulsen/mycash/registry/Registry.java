@@ -4,6 +4,7 @@ package dk.sunepoulsen.mycash.registry;
 //-----------------------------------------------------------------------------
 
 import dk.sunepoulsen.mycash.backend.BackendConnection;
+import dk.sunepoulsen.mycash.settings.Settings;
 import javafx.beans.property.ReadOnlyBooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanWrapper;
 import javafx.beans.property.SimpleObjectProperty;
@@ -11,6 +12,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.XSlf4j;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -19,6 +21,7 @@ import java.util.ResourceBundle;
 /**
  * Created by sunepoulsen on 21/10/2016.
  */
+@XSlf4j
 public class Registry {
     //-------------------------------------------------------------------------
     //              Constructors
@@ -38,11 +41,26 @@ public class Registry {
     public void initialize( final Stage primaryStage ) throws IOException {
         this.uiRegistry.initialize( primaryStage );
         this.locale = Locale.getDefault();
+
         this.settings.loadSettings();
+        this.settings.loadUserStates();
     }
 
     public void shutdown() {
         this.uiRegistry.shutdown();
+
+        settings.getUserStates().setLastConnectionDirectory( null );
+        if( currentBackendConnectionProperty.getValue() != null ) {
+            settings.getUserStates().setLastConnectionDirectory( currentBackendConnectionProperty.getValue().getDirectory().getAbsolutePath() );
+        }
+
+        try {
+            settings.storeUserStates();
+        }
+        catch( IOException ex ) {
+            log.warn( "Unable to store user states", ex );
+        }
+
         disconnectCurrentBackendConnection( currentBackendConnectionProperty, currentBackendConnectionProperty.get(), currentBackendConnectionProperty.get() );
     }
 

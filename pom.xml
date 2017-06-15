@@ -16,6 +16,8 @@
         <java.version>1.8</java.version>
         <javadoc.show.level>private</javadoc.show.level>
 
+        <jackson.version>2.8.5</jackson.version>
+
         <skip.integration.tests>true</skip.integration.tests>
 
         <mainClass>dk.sunepoulsen.mycash.application.MyCashApplication</mainClass>
@@ -68,6 +70,25 @@
             <version>3.0.1-b08</version>
         </dependency>
 
+        <!-- ===============================================================================  -->
+        <!--                JSON                                                              -->
+        <!-- ===============================================================================  -->
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
 
         <!-- ===============================================================================  -->
         <!--                Utilities                                                         -->

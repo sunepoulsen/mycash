@@ -2,6 +2,7 @@ package dk.sunepoulsen.mycash.application;
 
 import dk.sunepoulsen.mycash.registry.Registry;
 import dk.sunepoulsen.mycash.ui.mainwindow.MainWindow;
+import dk.sunepoulsen.mycash.ui.tasks.CreateOrOpenAccountingProjectTask;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -10,6 +11,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.XSlf4j;
 
+import java.io.File;
 import java.util.Locale;
 
 /**
@@ -18,6 +20,7 @@ import java.util.Locale;
 @XSlf4j
 public class MyCashApplication extends Application {
     private Registry registry = Registry.getDefault();
+    private MainWindow mainWindow;
 
     /**
      * Starts the JavaFX application.
@@ -36,11 +39,15 @@ public class MyCashApplication extends Application {
     @Override
     public void start( final Stage primaryStage ) throws Exception {
         Locale.setDefault( new Locale( "en", "DK" ) );
+        logSystemProperties();
 
         registry.initialize( primaryStage );
         log.info( "Using locale: {}", registry.getLocale() );
 
-        Parent root = FXMLLoader.load( MainWindow.class.getResource( "mainwindow.fxml" ) );
+        FXMLLoader loader = new FXMLLoader( MainWindow.class.getResource( "mainwindow.fxml" ) );
+        Parent root = loader.load();
+        mainWindow = loader.getController();
+
         Scene scene = new Scene( root );
 
         primaryStage.setTitle( "MyCash" );
@@ -48,6 +55,8 @@ public class MyCashApplication extends Application {
 
         maximizeStage( primaryStage );
         primaryStage.show();
+
+        openLastBackendConnection();
     }
 
     /**
@@ -77,6 +86,22 @@ public class MyCashApplication extends Application {
      */
     public static void main( String[] args ) {
         launch( args );
+    }
+
+    private void logSystemProperties() {
+        log.info( "System properties:" );
+        log.info( "=====================================================" );
+        System.getProperties().stringPropertyNames().stream().forEach( s -> log.info( "{} --> {}", s, System.getProperty( s ) ) );
+        log.info( "=====================================================" );
+    }
+
+    private void openLastBackendConnection() {
+        if( registry.getSettings().getUserStates().getLastConnectionDirectory() != null ) {
+            File file = new File( registry.getSettings().getUserStates().getLastConnectionDirectory() );
+
+            CreateOrOpenAccountingProjectTask task = new CreateOrOpenAccountingProjectTask( file );
+            mainWindow.setupAndExecuteTask( task );
+        }
     }
 
     /**

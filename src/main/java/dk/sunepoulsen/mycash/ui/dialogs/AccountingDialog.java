@@ -82,7 +82,7 @@ public class AccountingDialog extends GridPane implements Initializable {
         nameField.setText( model.getName() );
         nameField.textProperty().addListener( ( observable, oldValue, newValue ) -> disableButtons() );
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( registry.getSettings().getShortDateFormat() );
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( registry.getSettings().getModel().getDateFormats().getShortFormat() );
 
         startDate.setConverter( new LocalDateStringConverter( formatter, null ) );
         startDate.setValue( model.getStartDate() );
