@@ -2,6 +2,7 @@ package dk.sunepoulsen.mycash.ui.topcomponents.navigator;
 
 import dk.sunepoulsen.mycash.backend.services.AccountingService;
 import dk.sunepoulsen.mycash.ui.model.Accounting;
+import dk.sunepoulsen.mycash.ui.model.AccountsNode;
 import dk.sunepoulsen.mycash.ui.model.api.NavigatorNode;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,7 +50,15 @@ public class RootTreeItem extends TreeItem<NavigatorNode> {
 
         log.info( "Constructing TreeItems for {} accountings", accountings.size() );
         return FXCollections.observableList( accountings.stream()
-                .map( node -> new TreeItem<NavigatorNode>( node ) )
+                .map( node -> {
+                    TreeItem<NavigatorNode> item = new TreeItem<>( node );
+
+                    ObservableList<TreeItem<NavigatorNode>> children = FXCollections.observableArrayList();
+                    children.add( new TreeItem<>( new AccountsNode( node ) ) );
+
+                    item.getChildren().setAll( children );
+                    return item;
+                } )
                 .collect( Collectors.toList() )
         );
     }

@@ -2,13 +2,16 @@ package dk.sunepoulsen.mycash.ui.topcomponents.navigator;
 
 import dk.sunepoulsen.mycash.backend.BackendConnection;
 import dk.sunepoulsen.mycash.registry.Registry;
+import dk.sunepoulsen.mycash.ui.model.api.ContentPaneNode;
 import dk.sunepoulsen.mycash.ui.model.api.NavigatorNode;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
+import lombok.Getter;
 import lombok.extern.slf4j.XSlf4j;
 
 import java.io.IOException;
@@ -23,8 +26,12 @@ public class Navigator extends AnchorPane {
     @FXML
     private TreeView<NavigatorNode> treeView;
 
+    @Getter
+    private SimpleObjectProperty<ContentPaneNode> activatedContentPaneNodeProperty;
+
     public Navigator() {
         this.backendConnection = null;
+        this.activatedContentPaneNodeProperty = new SimpleObjectProperty<>();
 
         FXMLLoader fxmlLoader = new FXMLLoader( getClass().getResource( "navigator.fxml" ) );
         fxmlLoader.setRoot( this );
@@ -44,7 +51,7 @@ public class Navigator extends AnchorPane {
 
         Registry.getDefault().getCurrentBackendConnectionProperty().addListener( this::reload );
 
-        treeView.setCellFactory( view -> new NavigatorTreeCell() );
+        treeView.setCellFactory( view -> new NavigatorTreeCell( this ) );
         treeView.setShowRoot( false );
         treeView.setEditable( false );
         treeView.getSelectionModel().setSelectionMode( SelectionMode.SINGLE );

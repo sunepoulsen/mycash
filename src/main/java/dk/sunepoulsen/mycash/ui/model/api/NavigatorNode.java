@@ -3,7 +3,7 @@ package dk.sunepoulsen.mycash.ui.model.api;
 import javafx.collections.ObservableList;
 
 /**
- * Created by sunepoulsen on 14/06/2017.
+ * Definition of model types that can be viewed in the navigation tree.
  */
 public interface NavigatorNode {
     String displayText();

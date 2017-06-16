@@ -2,6 +2,7 @@ package dk.sunepoulsen.mycash.ui.mainwindow;
 
 import com.google.common.primitives.Doubles;
 import dk.sunepoulsen.mycash.registry.Registry;
+import dk.sunepoulsen.mycash.ui.topcomponents.contentpanes.ContentPanes;
 import dk.sunepoulsen.mycash.ui.topcomponents.navigator.Navigator;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -31,6 +32,9 @@ public class MainWindow implements Initializable {
     @FXML
     private Navigator navigator;
 
+    @FXML
+    private ContentPanes contentPanes;
+
     boolean splitPaneInitialized = false;
 
     public MainWindow() {
@@ -39,6 +43,8 @@ public class MainWindow implements Initializable {
 
     @Override
     public void initialize( final URL location, final ResourceBundle resources ) {
+        contentPanes.getActivatedContentPaneNodeProperty().bind( navigator.getActivatedContentPaneNodeProperty() );
+
         actionPanel.setNavigator( navigator );
         actionPanel.setOnTaskCreated( this::setupAndExecuteTask );
     }

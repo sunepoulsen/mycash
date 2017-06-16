@@ -9,7 +9,7 @@
         </encoder>
     </appender>
 
-    <logger name="dk.sunepoulsen.mycash" level="INFO">
+    <logger name="dk.sunepoulsen.mycash" level="DEBUG">
         <appender-ref ref="PRODUCTION"/>
     </logger>
 
