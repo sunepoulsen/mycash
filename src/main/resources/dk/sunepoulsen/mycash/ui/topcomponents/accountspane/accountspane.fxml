@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.cell.TreeItemPropertyValueFactory?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<fx:root type="javafx.scene.layout.AnchorPane" xmlns:fx="http://javafx.com/fxml">
+    <TreeTableView fx:id="treeTableView" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+        <columns>
+            <TreeTableColumn text="No" visible="true">
+                <cellValueFactory>
+                    <TreeItemPropertyValueFactory property="no" />
+                </cellValueFactory>
+            </TreeTableColumn>
+
+            <TreeTableColumn text="Name" visible="true">
+                <cellValueFactory>
+                    <TreeItemPropertyValueFactory property="name" />
+                </cellValueFactory>
+            </TreeTableColumn>
+
+            <TreeTableColumn text="Type" visible="true">
+                <cellValueFactory>
+                    <TreeItemPropertyValueFactory property="type" />
+                </cellValueFactory>
+            </TreeTableColumn>
+
+            <TreeTableColumn text="Description" visible="true">
+                <cellValueFactory>
+                    <TreeItemPropertyValueFactory property="description" />
+                </cellValueFactory>
+            </TreeTableColumn>
+        </columns>
+    </TreeTableView>
+
+</fx:root>

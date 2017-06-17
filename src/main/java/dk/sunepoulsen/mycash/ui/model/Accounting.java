@@ -1,8 +1,6 @@
 package dk.sunepoulsen.mycash.ui.model;
 
 import dk.sunepoulsen.mycash.ui.model.api.NavigatorNode;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
@@ -27,15 +25,5 @@ public class Accounting implements NavigatorNode {
     @Override
     public String displayText() {
         return name;
-    }
-
-    @Override
-    public boolean isLeaf() {
-        return true;
-    }
-
-    @Override
-    public ObservableList<NavigatorNode> getChildren() {
-        return FXCollections.emptyObservableList();
     }
 }

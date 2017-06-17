@@ -1,13 +1,13 @@
 package dk.sunepoulsen.mycash.ui.model;
 
 import dk.sunepoulsen.mycash.ui.model.api.ContentPaneNode;
-import dk.sunepoulsen.mycash.ui.topcomponents.contentpanes.AccountsPane;
+import dk.sunepoulsen.mycash.ui.topcomponents.accountspane.AccountsPane;
 import javafx.scene.control.Tab;
 
 /**
  * Created by sunepoulsen on 16/06/2017.
  */
-public class AccountsNode extends LeafNavigatorNode implements ContentPaneNode {
+public class AccountsNode implements ContentPaneNode {
     private Accounting accounting;
 
     public AccountsNode( Accounting accounting ) {
