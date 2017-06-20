@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd">
+
+    <changeSet id="1" author="stp">
+        <createSequence cycle="false"
+                        incrementBy="50"
+                        sequenceName="account_id_seq"
+                        startValue="1"/>
+
+        <createTable tableName="accounts">
+            <column name="account_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="parent_account_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="type" type="varchar(50)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="no" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="description" type="clob">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint constraintName="fk_accounts_parent_account_id"
+                                 baseTableName="accounts" referencedTableName="accounts"
+                                 baseColumnNames="parent_account_id" referencedColumnNames="account_id"
+        />
+
+        <createTable tableName="accounting_accounts">
+            <column name="accounting_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="account_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createIndex indexName="idx_accounting_accounts"
+                     tableName="accounting_accounts"
+                     unique="true">
+            <column name="accounting_id" type="bigint"/>
+            <column name="account_id" type="bigint"/>
+        </createIndex>
+
+        <addForeignKeyConstraint constraintName="fk_accounting_accounts_accounting_id"
+                                 baseTableName="accounting_accounts" referencedTableName="accountings"
+                                 baseColumnNames="accounting_id" referencedColumnNames="accounting_id"
+        />
+        <addForeignKeyConstraint constraintName="fk_accounting_accounts_account_id"
+                                 baseTableName="accounting_accounts" referencedTableName="accounts"
+                                 baseColumnNames="account_id" referencedColumnNames="account_id"
+        />
+    </changeSet>
+
+</databaseChangeLog>

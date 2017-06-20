@@ -192,6 +192,7 @@ public class ProjectDatabase {
 
     public void deleteAllData() {
         transactional( em -> {
+            em.createQuery( "DELETE FROM AccountEntity a" ).executeUpdate();
             em.createQuery( "DELETE FROM AccountingEntity a" ).executeUpdate();
         } );
     }

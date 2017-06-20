@@ -32,6 +32,13 @@ public class AccountingService {
         return accounting;
     }
 
+    public Accounting find( Long id ) throws MyCashValidateException {
+        return database.untransactionalFunction( em -> {
+            AccountingEntity entity = em.find( AccountingEntity.class, id );
+            return convertEntity( entity );
+        } );
+    }
+
     public List<Accounting> findAllAccountings() {
         List<AccountingEntity> entities = database.query( em ->  em.createNamedQuery( "findAll", AccountingEntity.class ) );
 

@@ -9,4 +9,5 @@
 
     <!-- Accountings -->
     <include file="accountings.xml" relativeToChangelogFile="true" />
+    <include file="accounts.xml" relativeToChangelogFile="true" />
 </databaseChangeLog>
