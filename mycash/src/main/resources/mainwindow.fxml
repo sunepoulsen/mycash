@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import dk.sunepoulsen.adopt.javafx.window.system.modes.AdoptAnchorMode?>
+<?import dk.sunepoulsen.adopt.javafx.window.system.modes.AdoptSplitMode?>
+<?import javafx.scene.layout.BorderPane?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="dk.sunepoulsen.adopt.javafx.window.system.mainwindow.MainWindow">
+    <top>
+        <AdoptAnchorMode modeIdentifier="toolbar"/>
+    </top>
+    <center>
+        <AdoptSplitMode modeIdentifier="center" orientation="HORIZONTAL">
+            <items>
+                <AdoptAnchorMode modeIdentifier="navigation"/>
+                <AdoptAnchorMode modeIdentifier="content"/>
+            </items>
+        </AdoptSplitMode>
+    </center>
+</BorderPane>
